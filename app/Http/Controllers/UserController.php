@@ -194,6 +194,11 @@ public function store_ajax(Request $request) {
     redirect('/');
 }
 
+public function show_ajax(string $id) {
+    $user = UserModel::find($id);
+    return view('user.show_ajax', ['user' => $user]);
+}
+
 // Menampilkan halaman form edit user Ajax
 public function edit_ajax(string $id)
 {

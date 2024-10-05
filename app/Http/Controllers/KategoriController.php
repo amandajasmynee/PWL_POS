@@ -11,7 +11,7 @@ class KategoriController extends Controller
 {
     public function index() {
         $breadcrumb = (object)[
-            'title' => 'Daftar kategori barang',
+            'title' => 'Daftar Kategori Barang',
             'list' => ['Home', 'kategori']
         ];
         $page = (object)[
@@ -29,10 +29,10 @@ class KategoriController extends Controller
     // Method untuk menampilkan daftar kategori dalam bentuk DataTables
     public function list(Request $request)
     {
-        $kategori = kategorimodel::select('kategori_id', 'kategori_kode', 'kategori_nama');
+        $kategori = KategoriModel::select('kategori_id', 'kategori_kode', 'kategori_nama');
         
-        if ($request->kategori_id) {
-            $kategori->where('kategori_id', $request->kategori_id);
+        if ($request->kategori_kode) {
+            $kategori->where('kategori_kode', $request->kategori_kode);
         }
         return DataTables::of($kategori)
             ->addIndexColumn() // menambahkan kolom index / no urut

@@ -84,13 +84,13 @@
                 },
                 {
                     data: "harga_beli",
-                    className: "text-right",
+                    className: "",
                     orderable: true,
                     searchable: false
                 },
                 {
                     data: "harga_jual",
-                    className: "text-right",
+                    className: "",
                     orderable: true,
                     searchable: false
                 },

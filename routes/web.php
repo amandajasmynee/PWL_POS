@@ -18,7 +18,8 @@ Route::get('logout',[AuthController::class,'logout'])->middleware('auth');
 Route::middleware(['auth'])->group(function(){
     Route::get('/',[WelcomeController::class,'index']);
 
-    Route::group(['prefix' => 'user'], function() {     // artinya semua route di dalam group ini harus login dulu
+    // artinya semua route di dalam group ini harus punya role ADM (Administrator) dan MNG (Manager)
+    Route::group(['prefix' => 'user', 'middleware'=>'authorize:ADM,MNG'], function(){     // artinya semua route di dalam group ini harus login dulu
         Route::get('/', [UserController::class, 'index']);                  // menampilkan halaman awal user
         Route::post('/list', [UserController::class, 'list']);                // menampilkan data user dalam bentuk json untuk datatables
         Route::get('/create', [UserController::class, 'create']);       // menampilkan halaman form tambah user
@@ -57,7 +58,8 @@ Route::middleware(['auth'])->group(function(){
         });
     });
 
-    Route::group(['prefix' => 'kategori'], function(){
+    // artinya semua route di dalam group ini harus punya role ADM (Administrator) dan MNG (Manager)
+    Route::group(['prefix' => 'kategori', 'middleware'=>'authorize:ADM,MNG'], function(){
         Route::get('/', [KategoriController::class, 'index']);
         Route::post('/list', [KategoriController::class, 'list']);
         Route::get('/create', [KategoriController::class, 'create']);
@@ -75,7 +77,8 @@ Route::middleware(['auth'])->group(function(){
         Route::delete('{id}', [KategoriController::class, 'destroy']);
     });
 
-    Route::group(['prefix' => 'supplier'], function(){
+    // artinya semua route di dalam group ini harus punya role ADM (Administrator) dan MNG (Manager)
+    Route::group(['prefix' => 'supplier', 'middleware'=>'authorize:ADM,MNG'], function(){
         Route::get('/', [SupplierController::class, 'index']);
         Route::post('/list', [SupplierController::class, 'list']);
         Route::get('/create', [SupplierController::class, 'create']);

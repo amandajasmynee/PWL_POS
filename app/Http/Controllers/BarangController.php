@@ -9,6 +9,7 @@ use Yajra\DataTables\Facades\DataTables;
 use App\Http\Controllers\Controller;
 use Illuminate\Support\Facades\Validator;
 use PhpOffice\PhpSpreadsheet\IOFactory;
+use Barryvdh\DomPDF\Facade\Pdf;
 
 
 class BarangController extends Controller
@@ -393,5 +394,20 @@ class BarangController extends Controller
         $writer->save('php://output');
         exit;
         // end function export_excel
+    }
+    public function export_pdf() {
+        // Ambil data barang
+        $barang = BarangModel::select('kategori_id', 'barang_kode', 'barang_nama', 'harga_beli', 'harga_jual')
+                    ->orderBy('kategori_id')
+                    ->orderBy('barang_kode')
+                    ->with('kategori')
+                    ->get();
+        // Muat view dan kirim data barang ke PDF
+        $pdf = Pdf::loadView('barang.export_pdf', ['barang' => $barang]);
+        // Aktifkan remote access untuk load gambar
+        $pdf->setPaper('A4', 'portrait');
+        $pdf->setOption('isRemoteEnabled', true); // Ini penting untuk gambar dari URL
+        // Render dan tampilkan PDF
+        return $pdf->stream('Data Barang '.date('Y-m-d H:i:s').'.pdf');
     }
 }

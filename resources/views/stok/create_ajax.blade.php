@@ -1,42 +1,54 @@
-<form action="{{ url('/user/ajax') }}" method="POST" id="form-tambah">
+<form action="{{ url('/stok/ajax') }}" method="POST" id="form-tambah">
     @csrf
     <div id="modal-master" class="modal-dialog modal-lg" role="document">
         <div class="modal-content">
             <div class="modal-header">
-                <h5 class="modal-title" id="exampleModalLabel">Tambah Data User</h5>
+                <h5 class="modal-title" id="exampleModalLabel">Tambah Data Stok Barang</h5>
                 <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span
                         aria-hidden="true">&times;</span></button>
             </div>
             <div class="modal-body">
                 <div class="form-group">
-                    <label>Level Pengguna</label>
-                    <select name="level_id" id="level_id" class="form-control" required>
-                        <option value="">- Pilih Level -</option>
-                        @foreach ($level as $l)
-                            <option value="{{ $l->level_id }}">{{ $l->level_nama }}</option>
+                    <label>Supplier</label>
+                    <select class="form-control" id="supplier_id" name="supplier_id" required>
+                        <option value="">- Pilih supplier -</option>
+                        @foreach ($supplier as $a)
+                            <option value="{{ $a->supplier_id }}">{{ $a->supplier_nama }}</option>
                         @endforeach
                     </select>
-                    <small id="error-level_id" class="error-text form-text text-danger"></small>
+                    <small id="error-supplier_id" class="error-text form-text text-danger"></small>
                 </div>
                 <div class="form-group">
-                    <label>Username</label>
-                    <input value="" type="text" name="username" id="username" class="form-control" required>
-                    <small id="error-username" class="error-text form-text text-danger"></small>
+                    <label>Barang</label>
+                    <select class="form-control" id="barang_id" name="barang_id" required>
+                        <option value="">- Pilih barang -</option>
+                        @foreach ($barang as $b)
+                            <option value="{{ $b->barang_id }}">{{ $b->barang_nama }}</option>
+                        @endforeach
+                    </select>
+                    <small id="error-barang_id" class="error-text form-text text-danger"></small>
                 </div>
                 <div class="form-group">
-                    <label>Nama</label>
-                    <input value="" type="text" name="nama" id="nama" class="form-control" required>
-                    <small id="error-nama" class="error-text form-text text-danger"></small>
+                    <label>User</label>
+                    <select class="form-control" id="user_id" name="user_id" required>
+                        <option value="">- Pilih user -</option>
+                        @foreach ($user as $c)
+                            <option value="{{ $c->user_id }}">{{ $c->username }}</option>
+                        @endforeach
+                    </select>
+                    <small id="error-user_id" class="error-text form-text text-danger"></small>
                 </div>
                 <div class="form-group">
-                    <label>Password</label>
-                    <input value="" type="password" name="password" id="password" class="formcontrol" required>
-                    <small id="error-password" class="error-text form-text text-danger"></small>
+                    <label>Stok Tanggal</label>
+                    <input value="" type="date" name="stok_tanggal" id="stok_tanggal" class="form-control"
+                        required>
+                    <small id="error-stok_tanggal" class="error-text form-text text-danger"></small>
                 </div>
                 <div class="form-group">
-                    <label>Foto Profile</label>
-                    <input value="" type="file" name="foto" id="foto" class="form-control" accept=".png,.jpg">
-                    <small id="error-foto" class="error-text form-text text-danger"></small>
+                    <label>Stok Jumlah</label>
+                    <input value="" type="text" name="stok_jumlah" id="stok_jumlah" class="form-control"
+                        required>
+                    <small id="error-stok_jumlah" class="error-text form-text text-danger"></small>
                 </div>
             </div>
             <div class="modal-footer">
@@ -50,27 +62,25 @@
     $(document).ready(function() {
         $("#form-tambah").validate({
             rules: {
-                level_id: {
+                supplier_id: {
                     required: true,
                     number: true
                 },
-                username: {
+                barang_id: {
+                    required: true,
+                    number: true
+                },
+                user_id: {
+                    required: true,
+                    number: true
+                },
+                stok_tanggal: {
+                    required: true,
+                    minlength: 3
+                },
+                stok_jumlah: {
                     required: true,
                     minlength: 3,
-                    maxlength: 20
-                },
-                nama: {
-                    required: true,
-                    minlength: 3,
-                    maxlength: 100
-                },
-                password: {
-                    required: true,
-                    minlength: 6,
-                    maxlength: 20
-                },
-                foto: {
-                    accept: "png,jpg"
                 }
             },
             submitHandler: function(form) {
@@ -86,7 +96,7 @@
                                 title: 'Berhasil',
                                 text: response.message
                             });
-                            dataUser.ajax.reload();
+                            datastok.ajax.reload();
                         } else {
                             $('.error-text').text('');
                             $.each(response.msgField, function(prefix, val) {

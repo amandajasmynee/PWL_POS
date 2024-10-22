@@ -12,16 +12,47 @@
     <!-- icheck bootstrap -->
     <link rel="stylesheet" href="{{ asset('adminlte/plugins/icheck-bootstrap/icheck-bootstrap.min.css') }}">
     <!-- SweetAlert2 -->
-    <link rel="stylesheet" href="{{ asset('adminlte/plugins/sweetalert2-theme-bootstrap-4/bootstrap-4.min.css') }}"> <!-- Perbaikan nama file -->
+    <link rel="stylesheet" href="{{ asset('adminlte/plugins/sweetalert2-theme-bootstrap-4/bootstrap-4.min.css') }}">
     <!-- Theme style -->
     <link rel="stylesheet" href="{{ asset('adminlte/dist/css/adminlte.min.css') }}">
+    <!-- Custom styles for Rose Quartz and Serenity theme -->
+    <style>
+        body {
+            background: linear-gradient(135deg, #F7CAC9 0%, #92A8D1 100%);
+            height: 100vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+        .login-box .card {
+            border-top: 3px solid #92A8D1;
+        }
+        .card-header a {
+            color: #92A8D1;
+        }
+        .btn-primary {
+            background-color: #92A8D1;
+            border-color: #92A8D1;
+        }
+        .btn-primary:hover {
+            background-color: #F7CAC9;
+            border-color: #F7CAC9;
+        }
+        .icheck-primary>input:checked+input:before {
+            background-color: #92A8D1;
+        }
+        .login-box-msg, .card-header {
+            color: #92A8D1;
+        }
+    </style>
 </head>
 <body class="hold-transition login-page">
     <div class="login-box">
         <!-- /.login-logo -->
         <div class="card card-outline card-primary">
             <div class="card-header text-center">
-                <a href="{{ url('/') }}" class="h1"><b>Admin</b>LTE</a>
+                <img src="{{ asset('adminlte/dist/img/SVTMart.jpg') }}" alt="SVTMart Logo" style="height: 100px; margin-bottom: 20px;"> 
+                <a href="{{ url('/') }}" class="h1"><b>SVT</b>MART</a>
             </div>
             <div class="card-body">
                 <p class="login-box-msg">Sign in to start your session</p>
@@ -64,6 +95,12 @@
                         </div>
                     </div>
                 </form>
+                <!-- Tombol kembali -->
+                <div class="row mt-3">
+                    <div class="col-12">
+                        <a href="{{ route('landing') }}" class="btn btn-secondary btn-block">Kembali</a>
+                    </div>
+                </div>
             </div>
             <!-- /.card-body -->
         </div>
@@ -84,7 +121,7 @@
     <script>
         $.ajaxSetup({
             headers: {
-                'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content') // mengambil csrf token dari meta tag
+                'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
             }
         });
         $(document).ready(function() {
@@ -101,13 +138,13 @@
                         maxlength: 20
                     }
                 },
-                submitHandler: function(form) { // ketika valid, maka bagian yang akan dijalankan
+                submitHandler: function(form) {
                     $.ajax({
                         url: form.action,
                         type: form.method,
                         data: $(form).serialize(),
                         success: function(response) {
-                            if (response.status) { // jika sukses
+                            if (response.status) {
                                 Swal.fire({
                                     icon: 'success',
                                     title: 'Berhasil',
@@ -115,7 +152,7 @@
                                 }).then(function() {
                                     window.location = response.redirect;
                                 });
-                            } else { // jika error
+                            } else {
                                 $('.error-text').text('');
                                 $.each(response.msgField, function(prefix, val) {
                                     $('#error-' + prefix).text(val[0]);

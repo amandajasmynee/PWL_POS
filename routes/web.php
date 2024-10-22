@@ -7,9 +7,15 @@ use App\Http\Controllers\SupplierController;
 use App\Http\Controllers\UserController;
 use App\Http\Controllers\WelcomeController;
 use App\Http\Controllers\AuthController;
+use App\Http\Controllers\DetailController;
+use App\Http\Controllers\LandingPageController;
+use App\Http\Controllers\ProfileController;
+use App\Http\Controllers\StokController;
+use App\Http\Controllers\TransaksiController;
 use Illuminate\Support\Facades\Route;
 
 Route::pattern('id', '[0-9]+'); // artinya ketika ada parameter {id}, maka harus berupa angka
+Route::get('landing', [LandingPageController::class, 'index'])->name('landing');
 
 Route::get('login', [AuthController::class, 'login'])->name('login');
 Route::post('login', [AuthController::class, 'postlogin']);
@@ -19,6 +25,14 @@ Route::get('logout',[AuthController::class,'logout'])->middleware('auth');
 
 Route::middleware(['auth'])->group(function(){
     Route::get('/',[WelcomeController::class,'index']);
+
+    Route::group(['prefix' => 'profile', 'middleware'=>'authorize:ADM,MNG,STF,CST'], function(){
+        Route::get('/', [ProfileController::class, 'index']);
+        Route::get('/{id}/edit_ajax', [ProfileController::class, 'edit_ajax']);
+        Route::put('/{id}/update_ajax', [ProfileController::class, 'update_ajax']);
+        Route::get('/{id}/edit_foto', [ProfileController::class, 'edit_foto']);
+        Route::put('/{id}/update_foto', [ProfileController::class, 'update_foto']);
+    });
 
     // artinya semua route di dalam group ini harus punya role ADM (Administrator) dan MNG (Manager)
     Route::group(['prefix' => 'user', 'middleware'=>'authorize:ADM,MNG'], function(){     // artinya semua route di dalam group ini harus login dulu
@@ -135,5 +149,74 @@ Route::middleware(['auth'])->group(function(){
         Route::get('/{id}/delete_ajax', [BarangController::class, 'confirm_ajax']);
         Route::delete('/{id}/delete_ajax', [BarangController::class, 'delete_ajax']);
         Route::delete('{id}', [BarangController::class, 'destroy']);
+    });
+
+    // artinya semua route di dalam group ini harus punya role ADM (Administrator), MNG (Manager), dan STF (Staf)
+    Route::group(['prefix' => 'stok', 'middleware'=>'authorize:ADM,MNG,STF'], function(){
+        Route::get('/', [StokController::class, 'index']);
+        Route::post('/list', [StokController::class, 'list']);
+        Route::get('/create', [StokController::class, 'create']); 
+        Route::post('/', [StokController::class, 'store']); 
+        Route::get('/create_ajax', [StokController::class, 'create_ajax']);
+        Route::post('/ajax', [StokController::class, 'store_ajax']);
+        Route::get('/{id}', [StokController::class, 'show']);
+        Route::get('/{id}/show_ajax', [StokController::class, 'show_ajax']);
+        Route::get('/{id}/edit', [StokController::class, 'edit']);
+        Route::put('{id}', [StokController::class, 'update']);
+        Route::get('/{id}/edit_ajax', [StokController::class, 'edit_ajax']);
+        Route::put('/{id}/update_ajax', [StokController::class, 'update_ajax']);
+        Route::get('/import', [StokController::class, 'import']); 
+        Route::post('/import_ajax', [StokController::class, 'import_ajax']);
+        Route::get('/export_excel', [StokController::class, 'export_excel']);
+        Route::get('/export_pdf', [StokController::class, 'export_pdf']);
+        Route::get('/{id}/delete_ajax', [StokController::class, 'confirm_ajax']);
+        Route::delete('/{id}/delete_ajax', [StokController::class, 'delete_ajax']);
+        Route::delete('{id}', [StokController::class, 'destroy']);
+    });
+
+    // artinya semua route di dalam group ini harus punya role ADM (Administrator), MNG (Manager), dan STF (Staf)
+    Route::group(['prefix' => 'transaksi', 'middleware'=>'authorize:ADM,MNG,STF'], function(){
+        Route::get('/', [TransaksiController::class, 'index']);
+        Route::post('/list', [TransaksiController::class, 'list']);
+        Route::get('/create', [TransaksiController::class, 'create']); 
+        Route::post('/', [TransaksiController::class, 'store']); 
+        Route::get('/create_ajax', [TransaksiController::class, 'create_ajax']);
+        Route::post('/ajax', [TransaksiController::class, 'store_ajax']);
+        Route::get('/{id}', [TransaksiController::class, 'show']);
+        Route::get('/{id}/show_ajax', [TransaksiController::class, 'show_ajax']);
+        Route::get('/{id}/edit', [TransaksiController::class, 'edit']);
+        Route::put('{id}', [TransaksiController::class, 'update']);
+        Route::get('/{id}/edit_ajax', [TransaksiController::class, 'edit_ajax']);
+        Route::put('/{id}/update_ajax', [TransaksiController::class, 'update_ajax']);
+        Route::get('/import', [TransaksiController::class, 'import']); 
+        Route::post('/import_ajax', [TransaksiController::class, 'import_ajax']);
+        Route::get('/export_excel', [TransaksiController::class, 'export_excel']);
+        Route::get('/export_pdf', [TransaksiController::class, 'export_pdf']);
+        Route::get('/{id}/delete_ajax', [TransaksiController::class, 'confirm_ajax']);
+        Route::delete('/{id}/delete_ajax', [TransaksiController::class, 'delete_ajax']);
+        Route::delete('{id}', [TransaksiController::class, 'destroy']);
+    });
+
+    // artinya semua route di dalam group ini harus punya role ADM (Administrator), MNG (Manager), dan STF (Staf)
+    Route::group(['prefix' => 'detail', 'middleware'=>'authorize:ADM,MNG,STF'], function(){
+        Route::get('/', [DetailController::class, 'index']);
+        Route::post('/list', [DetailController::class, 'list']);
+        Route::get('/create', [DetailController::class, 'create']); 
+        Route::post('/', [DetailController::class, 'store']); 
+        Route::get('/create_ajax', [DetailController::class, 'create_ajax']);
+        Route::post('/ajax', [DetailController::class, 'store_ajax']);
+        Route::get('/{id}', [DetailController::class, 'show']);
+        Route::get('/{id}/show_ajax', [DetailController::class, 'show_ajax']);
+        Route::get('/{id}/edit', [DetailController::class, 'edit']);
+        Route::put('{id}', [DetailController::class, 'update']);
+        Route::get('/{id}/edit_ajax', [DetailController::class, 'edit_ajax']);
+        Route::put('/{id}/update_ajax', [DetailController::class, 'update_ajax']);
+        Route::get('/import', [DetailController::class, 'import']); 
+        Route::post('/import_ajax', [DetailController::class, 'import_ajax']);
+        Route::get('/export_excel', [DetailController::class, 'export_excel']);
+        Route::get('/export_pdf', [DetailController::class, 'export_pdf']);
+        Route::get('/{id}/delete_ajax', [DetailController::class, 'confirm_ajax']);
+        Route::delete('/{id}/delete_ajax', [DetailController::class, 'delete_ajax']);
+        Route::delete('{id}', [DetailController::class, 'destroy']);
     });
 });

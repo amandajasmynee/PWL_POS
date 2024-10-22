@@ -1,4 +1,3 @@
-
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -6,8 +5,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <title>Registrasi Pengguna</title>
     <!-- Google Font: Source Sans Pro -->
-    <link rel="stylesheet"
-        href="https://fonts.googleapis.com/css?family=Source+Sans+Pro:300,400,400i,700&display=fallback">
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Source+Sans+Pro:300,400,400i,700&display=fallback">
     <!-- Font Awesome -->
     <link rel="stylesheet" href="{{ asset('adminlte/plugins/fontawesome-free/css/all.min.css') }}">
     <!-- icheck bootstrap -->
@@ -16,12 +14,45 @@
     <link rel="stylesheet" href="{{ asset('adminlte/plugins/sweetalert2-theme-bootstrap-4/bootstrap-4.min.css') }}">
     <!-- Theme style -->
     <link rel="stylesheet" href="{{ asset('adminlte/dist/css/adminlte.min.css') }}">
+    <!-- Custom styles for Rose Quartz and Serenity theme -->
+    <style>
+        body {
+            background: linear-gradient(135deg, #F7CAC9, #92A8D1); /* Gradasi Rose Quartz ke Serenity */
+            height: 100vh;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+        }
+        .login-box .card {
+            border-top: 3px solid #92A8D1; /* Serenity */
+        }
+        .card-header a {
+            color: #92A8D1; /* Serenity */
+        }
+        .btn-primary {
+            background-color: #92A8D1; /* Serenity */
+            border-color: #92A8D1; /* Serenity */
+        }
+        .btn-primary:hover {
+            background-color: #F7CAC9; /* Rose Quartz */
+            border-color: #F7CAC9; /* Rose Quartz */
+        }
+        .login-box-msg, .card-header {
+            color: #92A8D1; /* Serenity */
+        }
+        .icheck-primary>input:checked+input:before {
+            background-color: #92A8D1; /* Serenity */
+        }
+    </style>
 </head>
 <body class="hold-transition login-page">
     <div class="login-box">
         <!-- /.login-logo -->
         <div class="card card-outline card-primary">
-            <div class="card-header text-center"><a href="{{ url('/') }}" class="h1"><b>Admin</b>LTE</a></div>
+            <div class="card-header text-center">
+                <img src="{{ asset('adminlte/dist/img/SVTMart.jpg') }}" alt="SVTMart Logo" style="height: 100px; margin-bottom: 20px;">
+                <a href="{{ url('/') }}" class="h1"><b>SVT</b>MART</a>
+            </div>
             <div class="card-body">
                 <p class="login-box-msg">New User Registration</p>
                 <form method="POST" action="{{ url('register') }}" id="form-register">
@@ -96,6 +127,13 @@
                             <p>Already have an account? <a href="{{ url('login') }}">Sign In</a></p>
                         </div>
                     </div>
+                    <!-- Tombol kembali -->
+                    <div class="row mt-3">
+                        <div class="col-12">
+                            <a href="{{ route('landing') }}" class="btn btn-secondary btn-block">Kembali</a>
+                        </div>
+                    </div>
+                </div>
                 </form>
             </div>
             <!-- /.card-body -->

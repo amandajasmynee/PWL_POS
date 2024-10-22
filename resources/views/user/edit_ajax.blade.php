@@ -53,9 +53,14 @@
                     <div class="form-group">
                         <label>Password</label>
                         <input value="" type="password" name="password" id="password" class="formcontrol">
-                        <small class="form-text text-muted">Abaikan jika tidak ingin ubah
-                            password</small>
+                        <small class="form-text text-muted">Abaikan jika tidak ingin ubah password</small>
                         <small id="error-password" class="error-text form-text textdanger"></small>
+                    </div>
+                    <div class="form-group">
+                        <label>Foto Profile</label>
+                        <input type="file" name="foto" id="foto" class="form-control" accept=".png,.jpg">
+                        <small class="form-text text-muted">Abaikan jika tidak ingin ubah foto profile</small>
+                        <small id="error-foto" class="error-text form-text text-danger"></small>
                     </div>
                 </div>
                 <div class="modal-footer">
@@ -86,6 +91,9 @@
                     password: {
                         minlength: 6,
                         maxlength: 20
+                    },
+                    foto: {
+                        accept: "png,jpg"
                     }
                 },
                 submitHandler: function(form) {

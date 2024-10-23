@@ -49,7 +49,7 @@ class TransaksiController extends Controller
         return DataTables::of($transaksi)
             ->addIndexColumn() // menambahkan kolom index / no urut (default nama kolom: DT_RowIndex) 
             ->addColumn('aksi', function ($transaksi) { // menambahkan kolom aksi 
-                $btn = '<a href="' . url('/trabsaksi/' . $transaksi->penjualan_id) . '" class="btn btn-info btn-sm">Detail</a> ';
+                $btn = '<a href="' . url('/transaksi/' . $transaksi->penjualan_id) . '" class="btn btn-info btn-sm">Detail</a> ';
                 $btn .= '<button onclick="modalAction(\'' . url('/transaksi/' . $transaksi->penjualan_id . '/edit_ajax') . '\')" class="btn btn-warning btn-sm">Edit</button> ';
                 $btn .= '<button onclick="modalAction(\'' . url('/transaksi/' . $transaksi->penjualan_id . '/delete_ajax') . '\')" class="btn btn-danger btn-sm">Hapus</button> ';
                 return $btn;

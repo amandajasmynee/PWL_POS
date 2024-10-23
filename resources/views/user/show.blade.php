@@ -32,6 +32,10 @@
                     <th>Password</th>
                     <td>********</td>
                 </tr>
+                <tr>
+                    <th>Foto Profile</th>
+                    <td><img src=" {{ asset($user->foto) }} " height="100" alt="Tidak ada foto."></td>
+                </tr>
             </table>
         @endempty
         <a href="{{ url('user') }}" class="btn btn-sm btn-default mt-2">Kembali</a>

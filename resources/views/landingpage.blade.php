@@ -24,7 +24,7 @@
       font-family: 'Source Sans Pro', sans-serif;
       margin: 0;
       padding: 0;
-      background-color: var(--gray);
+      background: linear-gradient(135deg, var(--rose-quartz), var(--serenity));
       color: var(--dark-gray);
     }
 

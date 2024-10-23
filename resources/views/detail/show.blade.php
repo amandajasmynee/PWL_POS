@@ -19,7 +19,7 @@
                     </tr>
                     <tr>
                         <th>Kode Penjualan</th>
-                        <td>{{ $detail->penjualan->penjualan_kode }}</td>
+                        <td>{{ $detail->transaksi->penjualan_kode }}</td>
                     </tr>
                     <tr>
                         <th>Barang Nama</th>

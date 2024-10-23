@@ -206,7 +206,7 @@ class UserController extends Controller
                 'username' => 'required|max:20|unique:m_user,username,' . $id . ',user_id',
                 'nama' => 'required|max:100',
                 'password' => 'nullable|min:6|max:20',
-                'foto'      => 'nullable|mimes:jpeg,png,jpg|max:4096'
+                'foto'      => 'nullable|mimes:png,jpg|max:40968'
             ];
             // use Illuminate\Support\Facades\Validator;
             $validator = Validator::make($request->all(), $rules);

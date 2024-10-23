@@ -42,7 +42,7 @@
                                             <option value="{{ $item->user_id }}">{{ $item->username }}</option>
                                         @endforeach
                                     </select>
-                                    <small class="form-text text-muted">user</small>
+                                    <small class="form-text text-muted">User</small>
                                 </div>
                             </div>
                         </div>
